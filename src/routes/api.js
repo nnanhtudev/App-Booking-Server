@@ -1,12 +1,15 @@
-import express from "express"
-import ApiLoginRegister from '../controller/ApiLoginRegister'
-
-const router = express.Router()
+import loginRegisterRoutes from './loginRegister';
+import hotelRoutes from './hotel';
+import roomRoutes from './room'
 
 const initAPIRoutes = (app) => {
-  router.post('/register', ApiLoginRegister.handleRegister)
-  router.post('/login', ApiLoginRegister.handleLogin)
-  return app.use('/api/v1/', router)
-}
+  app.use('/api/v1/room', roomRoutes);
 
-export default initAPIRoutes
+  app.use('/api/v1/hotel', hotelRoutes);
+
+  app.use('/api/v1', loginRegisterRoutes);
+
+  return app;
+};
+
+export default initAPIRoutes;

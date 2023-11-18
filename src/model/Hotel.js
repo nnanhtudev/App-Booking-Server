@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const Hotels = new Schema({
+  _id: { type: Schema.Types.ObjectId },
   name: String, // String is shorthand for {type: String}
   type: String,
   city: String,
@@ -9,7 +10,7 @@ const Hotels = new Schema({
   distance: String,
   photos: [String],
   desc: String,
-  rating: Int32Array,
+  rating: Number,
   featured: Boolean,
   rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }]
 }, {

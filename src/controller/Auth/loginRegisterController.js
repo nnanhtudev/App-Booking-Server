@@ -1,4 +1,4 @@
-import ApiLoginRegisterService from '../services/ApiLoginRegisterService'
+import ApiLoginRegisterService from '../../services/loginRegisterService'
 
 const handleRegister = async (req, res) => {
   try {

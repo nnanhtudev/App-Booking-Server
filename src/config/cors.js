@@ -1,21 +1,17 @@
 import "dotenv/config";
+import cors from "cors";
+
 const configCors = (app) => {
-  app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader("Access-Control-Allow-Origin", process.env.REACT_CLIENT_URL);
+  // use middleware cors
+  app.use(cors({
+    origin: [process.env.REACT_CLIENT_URL, process.env.REACT_ADMIN_URL],
+    methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
+    credentials: true,
+    allowedHeaders: "X-Requested-With,content-type",
+  }));
 
-    // Request methods you wish to allow
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+  // console.log("REACT_CLIENT_URL:", process.env.REACT_CLIENT_URL);
+  // console.log("REACT_ADMIN_URL:", process.env.REACT_ADMIN_URL);
+};
 
-    // Request headers you wish to allow
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader("Access-Control-Allow-Credentials", true);
-
-    // Pass to next layer of middleware
-    next();
-  });
-}
-export default configCors
+export default configCors;
