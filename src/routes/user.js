@@ -5,7 +5,7 @@ import apiAdminController from "../controller/Auth/LoginAdmin";
 import { checkUserJWT } from "../middleware/JWTAction";
 const router = express.Router();
 
-router.get("/account", checkUserJWT, ApiLoginRegister.getAccount);
+// router.get("/account", checkUserJWT, ApiLoginRegister.getAccount);
 
 router.post("/register", ApiLoginRegister.handleRegister);
 router.post("/login", ApiLoginRegister.handleLogin);

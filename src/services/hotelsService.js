@@ -4,6 +4,7 @@ import Hotel from "../model/Hotel";
 //API Administration
 const handleGetAllListHotels = async () => {
   try {
+    console.log("Get all list");
     let data = await Hotel.find({});
     if (!data) {
       return {
@@ -18,6 +19,30 @@ const handleGetAllListHotels = async () => {
       DT: data,
     };
   } catch (error) {
+    return {
+      EM: "error something went wrong service",
+      EC: -2,
+    };
+  }
+};
+const handleCreateHotel = async (dataHotel) => {
+  try {
+    console.log(dataHotel);
+    let data = await Hotel.create(dataHotel);
+    if (!data) {
+      return {
+        EM: "Create data not found",
+        EC: -3,
+        DT: [],
+      };
+    }
+    return {
+      EM: "Ok!",
+      EC: 0,
+      DT: data,
+    };
+  } catch (error) {
+    console.log(error);
     return {
       EM: "error something went wrong service",
       EC: -2,
@@ -92,4 +117,4 @@ const handleGetHotelsById = async (id) => {
   }
 };
 
-module.exports = { handleGetAllListHotels, handleGetHotelsHomePage, handleGetHotelsById };
+module.exports = { handleGetAllListHotels, handleGetHotelsHomePage, handleGetHotelsById, handleCreateHotel };

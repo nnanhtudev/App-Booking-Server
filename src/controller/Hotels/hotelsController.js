@@ -46,4 +46,25 @@ const getHotelById = async (req, res) => {
   }
 };
 
-module.exports = { getAllListHotels, getHotelById };
+const createHotels = async (req, res) => {
+  try {
+    let data = await hotelsService.handleCreateHotel(req.body);
+    return res.status(200).json({
+      EM: data.EM,
+      EC: data.EC,
+      DT: data.DT,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({
+      EM: "error with form data",
+      EC: -1,
+      DT: [],
+    });
+  }
+};
+
+const updateHotels = async (req, res) => {};
+
+const deleteHotels = async (req, res) => {};
+module.exports = { getAllListHotels, getHotelById, createHotels, updateHotels, deleteHotels };
