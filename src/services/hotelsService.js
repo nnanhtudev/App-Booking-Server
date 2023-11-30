@@ -4,7 +4,6 @@ import Hotel from "../model/Hotel";
 //API Administration
 const handleGetAllListHotels = async () => {
   try {
-    console.log("Get all list");
     let data = await Hotel.find({});
     if (!data) {
       return {
@@ -86,6 +85,7 @@ const handleGetHotelsHomePage = async (city, type, rating) => {
       };
     }
   } catch (error) {
+    console.log(error);
     return {
       EM: "error something went wrong service",
       EC: -2,
@@ -95,7 +95,7 @@ const handleGetHotelsHomePage = async (city, type, rating) => {
 
 const handleGetHotelsById = async (id) => {
   try {
-    const data = await Hotel.findById(id).exec();
+    const data = await Hotel.findOne({ _id: id });
     if (!data) {
       return {
         EM: "Find id hotels not found",

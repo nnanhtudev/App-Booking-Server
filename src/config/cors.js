@@ -1,31 +1,32 @@
 import "dotenv/config";
-import cors from "cors";
-
-const handleOptionsRequest = (req, res, next) => {
-  if (req.method === "OPTIONS") {
-    res.set("Access-Control-Allow-Origin", "*");
-    res.set("Access-Control-Allow-Headers", "Content-Type");
-    res.status(204).send("");
-  } else {
-    next();
-  }
-};
 
 const configCors = (app) => {
-  // Sử dụng middleware cho tất cả các yêu cầu (bao gồm OPTIONS)
-  app.use(handleOptionsRequest);
+  // Add headers before the routes are defined
+  app.use(function (req, res, next) {
+    // Get the request origin 
+    const origin = req.get("Origin");
 
-  app.use(
-    cors({
-      origin: [process.env.REACT_CLIENT_URL, process.env.REACT_ADMIN_URL],
-      methods: "GET, POST, OPTIONS, PUT, PATCH, DELETE",
-      credentials: true,
-      allowedHeaders: "X-Requested-With,content-type,Authorization",
-    })
-  );
+    // Check if the request origin is allowed
+    if ([process.env.REACT_CLIENT_URL, process.env.REACT_ADMIN_URL].includes(origin)) {
+      // Allow the request origin
+      res.setHeader("Access-Control-Allow-Origin", origin);
+    }
 
-  // console.log("REACT_CLIENT_URL:", process.env.REACT_CLIENT_URL);
-  // console.log("REACT_ADMIN_URL:", process.env.REACT_ADMIN_URL);
+    // Request methods you wish to allow
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+
+    // Request headers you wish to allow
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type,Authorization");
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g., in case you use sessions)
+    res.setHeader("Access-Control-Allow-Credentials", true);
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(200);
+    }
+    // Pass to the next layer of middleware
+    next();
+  });
 };
 
 export default configCors;
