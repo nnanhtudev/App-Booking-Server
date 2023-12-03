@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const getPaginate = async (page, limit) => {
   //Skip <=> offset = (page - 1) * limit
   try {
-    console.log("Loading paginate", page, limit);
     const rows = await Room.find({}, "id title desc maxPeople price roomNumbers").skip(page).limit(limit);
     const count = await Room.countDocuments({});
     let totalPages = Math.ceil(count / limit);

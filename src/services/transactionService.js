@@ -48,4 +48,27 @@ const getTransactionByUser = async (email) => {
   }
 };
 
-module.exports = { createTransaction, getTransactionByUser };
+const getTransactionBy = async () => {
+  try {
+    let data = await Transaction.find({}).populate("hotel").lean();
+    if (!data) {
+      return {
+        EM: "Get data transaction not found",
+        EC: -3,
+        DT: [],
+      };
+    }
+    return {
+      EM: "Ok!",
+      EC: 0,
+      DT: data,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      EM: "error something went wrong service",
+      EC: -2,
+    };
+  }
+};
+module.exports = { createTransaction, getTransactionByUser, getTransactionBy };

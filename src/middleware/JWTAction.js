@@ -34,10 +34,12 @@ const extractToken = (req) => {
 
 const checkUserJWT = (req, res, next) => {
   let cookies = req.cookies;
+
   let tokenFormHeader = extractToken(req);
   if ((cookies && cookies.jwt) || tokenFormHeader) {
     let token = cookies && cookies.jwt ? cookies.jwt : tokenFormHeader;
     let decoded = verifyToken(token);
+    console.log(decoded);
     if (decoded) {
       req.user = decoded;
       req.token = token;
